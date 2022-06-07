@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour
     public float speed;
     private Rigidbody enemyRb;
     private GameObject player;
-    
 
+    public int Length { get; internal set; }
 
     void Start()
     {

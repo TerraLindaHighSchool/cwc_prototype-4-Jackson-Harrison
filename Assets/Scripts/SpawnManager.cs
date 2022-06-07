@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
 
-    public GameObject enemyPrefab;
-    private float spawnRange = 9;
     public int enemyCount;
     public int waveNumber = 1;
     public GameObject powerupPrefab;
+    public GameObject enemyPrefab;
+    public GameObject heavyPrefab;
+    public TextMeshProUGUI WaveNumberUI;
+    private float spawnRange = 9;
 
     // Start is called before the first frame update
     void Start()
@@ -22,19 +25,33 @@ public class SpawnManager : MonoBehaviour
     void Update()
     {
         enemyCount = FindObjectsOfType<Enemy>().Length;
+        Debug.Log(enemyCount);
+        UpdateWaveNumberUI();
 
         if (enemyCount == 0)
         {
-
-            waveNumber++;
+            SpawnEnemyWave(waveNumber);
             Instantiate(powerupPrefab, GenerateSpawnPostion(), powerupPrefab.transform.rotation);
             SpawnEnemyWave(waveNumber);
+            waveNumber++;
         }
     }
 
-    void SpawnEnemyWave(int enemiesToSpawn)
+    // Update the Wave Number UI
+    private void UpdateWaveNumberUI()
     {
-        for (int i = 0; i < enemiesToSpawn; i++)
+        WaveNumberUI.text = "Wave " + waveNumber;
+    }
+
+    void SpawnEnemyWave(int waveNumber)
+    {
+
+        for (int i = 0; i < (waveNumber - 3); i++)
+        {
+            Instantiate(heavyPrefab, GenerateSpawnPostion(), heavyPrefab.transform.rotation);
+        }
+
+        for (int i = 0; i < waveNumber; i++)
         {
             Instantiate(enemyPrefab, GenerateSpawnPostion(), enemyPrefab.transform.rotation);
         }

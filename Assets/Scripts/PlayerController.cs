@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed = 5;
+    public bool hasPowerUp = false;
+    public GameObject powerupIndicator;
+    public bool devMode;
     private Rigidbody playerRb;
     private float powerupStrength = 15;
     private GameObject focalPoint;
-    public bool hasPowerUp = false;
-    public GameObject powerupIndicator;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +34,13 @@ public class PlayerController : MonoBehaviour
         if(transform.position.y < -10)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        //REMEMBER TO REMOVE
+        if (Input.GetKeyDown("p"))
+        {
+            devMode = true;
+            Debug.Log("p");
         }
     }
 
@@ -54,9 +64,15 @@ public class PlayerController : MonoBehaviour
         powerupIndicator.gameObject.SetActive(false);
     }
 
+    //Applifies force when colliding with 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Enemy") && hasPowerUp)
+        if(devMode == true)
+        {
+            Destroy(collision.gameObject);
+        }
+
+        else if(collision.gameObject.CompareTag("Enemy") && hasPowerUp)
         {
             Rigidbody enemyRigidbody = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 awayFromPlayer = collision.gameObject.transform.position - transform.position;
@@ -65,4 +81,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Collided with: " + collision.gameObject.name + "with powerup set to " + hasPowerUp);
         }
     }
+
+
 }
