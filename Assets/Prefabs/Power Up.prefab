@@ -106,3 +106,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f574464fe6d6c8942bd563f30ae3e013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerUp: {fileID: 8253415861269061281}
+  backround: {fileID: 0}

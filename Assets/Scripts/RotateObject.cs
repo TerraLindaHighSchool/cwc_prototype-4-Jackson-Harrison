@@ -5,7 +5,6 @@ using UnityEngine;
 public class RotateObject : MonoBehaviour
 {
     public GameObject powerUp;
-    public GameObject backround;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +16,5 @@ public class RotateObject : MonoBehaviour
     void Update()
     {
         powerUp.transform.Rotate(new Vector3(0, 30, 0) * Time.deltaTime);
-        backround.transform.Rotate(new Vector3(0, -1, 0) * Time.deltaTime);
     }
 }

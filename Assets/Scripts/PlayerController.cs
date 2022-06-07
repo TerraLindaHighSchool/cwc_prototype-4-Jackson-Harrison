@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public bool hasPowerUp = false;
     public GameObject powerupIndicator;
     public bool devMode;
+    public AudioSource bounceSound;
     private Rigidbody playerRb;
     private float powerupStrength = 15;
     private GameObject focalPoint;
@@ -21,6 +22,8 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
         focalPoint = GameObject.Find("Focal Point");
     }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -36,7 +39,7 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-        //REMEMBER TO REMOVE
+        //I'm going to remove this after you've graded
         if (Input.GetKeyDown("p"))
         {
             devMode = true;
@@ -67,7 +70,12 @@ public class PlayerController : MonoBehaviour
     //Applifies force when colliding with 
     private void OnCollisionEnter(Collision collision)
     {
-        if(devMode == true)
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            bounceSound.Play();
+        }
+
+        if (devMode == true)
         {
             Destroy(collision.gameObject);
         }
@@ -79,6 +87,7 @@ public class PlayerController : MonoBehaviour
 
             enemyRigidbody.AddForce(awayFromPlayer * powerupStrength, ForceMode.Impulse);
             Debug.Log("Collided with: " + collision.gameObject.name + "with powerup set to " + hasPowerUp);
+
         }
     }
 
